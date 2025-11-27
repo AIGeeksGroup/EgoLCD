@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <!--Page Title-->
+    <title>EgoLCD: Egocentric Video Generation with Long Context Diffusion</title>
+
+    <!--Meta Keywords and Description-->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="images/egolcd_logo.png" title="Favicon" />
+
+    <!-- Main CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Namari Color CSS -->
+    <link rel="stylesheet" href="css/namari-color.css">
+
+    <!--Icon Fonts - Font Awesome Icons-->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!-- Animate CSS-->
+    <link href="css/animate.css" rel="stylesheet" type="text/css">
+
+    <!--Google Webfonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status" class="la-ball-triangle-path">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!--End of Preloader-->
+
+    <div class="page-border" data-wow-duration="0.7s" data-wow-delay="0.2s">
+        <div class="top-border wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;"></div>
+        <div class="right-border wow fadeInRight animated" style="visibility: visible; animation-name: fadeInRight;">
+        </div>
+        <div class="bottom-border wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"></div>
+        <div class="left-border wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft;"></div>
+    </div>
+
+    <div id="wrapper">
+
+        <header id="banner" class="scrollto" data-enllax-ratio=".5">
+            <div id="header" class="nav-collapse">
+                <div class="row">
+                    <div class="col-1">
+
+                        <!--Logo-->
+                        <div id="logo">
+                            <!-- <p>CopyCat</p> -->
+                            <!--Logo that is shown on the banner-->
+                            <img src="images/egolcd_logo.png" id="banner-logo" />
+                            <!--End of Banner Logo-->
+
+                            <!--The Logo that is shown on the sticky Navigation Bar-->
+                            <img src="images/egolcd_logo.png" id="navigation-logo" />
+                            <!--End of Navigation Logo-->
+
+                        </div>
+                        <!--End of Logo-->
+
+                        <aside>
+
+                            <!--Social Icons in Header-->
+                            <ul class="social-icons">
+                                <!-- <li>
+                                    <a target="_blank" title="Code" href="">
+                                        <i class="fa fa-github fa-1x"></i><span>Code </span>
+                                    </a> -->
+                                <!-- </li> -->
+                                <!-- <li>
+                                    <a target="_blank" title="Paper" href="https://arxiv.org/abs/">
+                                        <i class="fa fa-paperclip fa-1x"></i><span>Paper</span>
+                                    </a>
+                                </li> -->
+                                <!-- <li>
+                                    <a target="_blank" title="Twitter" href="">
+                                        <i class="fa fa-twitter fa-1x"></i><span>Twitter</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                            <!--End of Social Icons in Header-->
+
+                        </aside>
+
+                        <!--Main Navigation-->
+                        <nav id="nav-main">
+                            <ul>
+                                <li>
+                                    <a href="#overview">Overview</a>
+                                </li>
+                                <li>
+                                    <a href="#about">CopyCat Evaluation Suite</a>
+                                </li>
+                                <li>
+                                    <a href="#method">Identifying Indirect Anchors</a>
+                                </li>
+                                <li>
+                                    <a href="#mitigations">Mitigation Strategies</a>
+                                </li>
+                                <li>
+                                    <a href="#takeaways">Key Takeaways</a>
+                                </li>
+                                <li>
+                                    <a href="#footer">BibTex</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--End of Main Navigation-->
+
+                        <div id="nav-trigger"><span></span></div>
+                        <nav id="nav-mobile"></nav>
+
+                    </div>
+                </div>
+            </div><!--End of Header-->
+
+            <!--Banner Content-->
+            <div id="banner-content" class="row clearfix">
+
+                <div style="text-align: center;">
+
+                    <div class="section-heading">
+                        <h1>EgoLCD: Egocentric Video Generation with Long Context Diffusion
+                        </h1>
+                        <div>
+                            <span class="author-block">
+                                <a href="#">Liuzhou Zhang<sup>1*</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="#">Jiarui Ye<sup>1*</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="#">Yuanlei Wang<sup>2*</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="#">Ming Zhong<sup>3</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="#">Mingju Cao<sup>4</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="#">Wanke Xia<sup>5</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="#">Bowen Zeng<sup>3</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="https://steve-zeyu-zhang.github.io/">Zeyu Zhang<sup>1†</sup></a>&nbsp;
+                            </span>
+                            <span class="author-block">
+                                <a href="https://ha0tang.github.io/">Hao Tang<sup>1‡</sup></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <!-- <br> -->
+                        <span class="author-block">
+                            <sup>1</sup>Peking University &nbsp;
+                            <sup>2</sup>Sun Yat-sen University &nbsp;
+                            <sup>3</sup>Zhejiang University &nbsp;
+                            <sup>4</sup>Chinese Academy of Sciences &nbsp;
+                            <sup>5</sup>Tsinghua University
+                        </span>
+                    </div>
+
+                    <div class="column author-block">
+                        <span style="color: gray; font-size: smaller; font-style: italic;">
+                            <sup>*</sup>Equal contribution. &nbsp;
+                            <sup>†</sup>Project lead. &nbsp;
+                            <sup>‡</sup>Corresponding author.
+                        </span>
+                    </div>
+
+                    <a href="#" class="button"><i class="fa fa-paperclip fa-1x"></i> Paper</a>
+                    <a href="#" class="button"><i class="fa fa-github fa-1x"></i> Code </a>
+                    <a href="#" class="button"><i class="fa fa-gamepad fa-1x"></i> Model </a>
+                    <a href="#" class="button"><i class="fa fa-play fa-1x"></i> Dataset </a>
+                </div>
+
+
+
+            </div><!--End of Row-->
+        </header>
+
+        <!--Main Content Area-->
+        <main>
+
+            <section id="overview" class="scrollto">
+                <div class="row clearfix no-padding-bottom">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h2 class="section-title">Overview</h2>
+                        </div>
+                        <div class="col-1 secondary-color no-padding-bottom" style="padding: 10px; margin: 5px;">
+                            <p style="line-height: 20px; font-family:Georgia, 'Times New Roman', Times, serif">
+                                <b>TL;DR:</b> EgoLCD keeps long egocentric videos on track by pairing a sparse long-term cache with attention-based short memory, guided by memory regularization and structured prompts, yielding SOTA quality and temporal consistency on EgoVid-5M.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <!--Gallery-->
+                <!-- <aside id="gallery" class="row text-center scrollto clearfix no-padding-bottom no-padding-top"
+                    style="width:90%" data-featherlight-gallery data-featherlight-filter="a">
+                    <div class="col-2" style="margin-bottom: 0px;">
+                        <a href="images/intro/1.png" data-featherlight="image" class="col-3 wow fadeI"
+                            data-wow-delay="0.1s">
+                            <p style="line-height: 1.2; color:black; font-size:12px">Model: Playground
+                                v2.5<br>Propmt: "Mario"</p>
+                            <img src="images/intro/1.png" />
+                        </a>
+
+                        <a href="images/intro/2.png" data-featherlight="image" class="col-3 wow fadeI"
+                            data-wow-delay="0.3s">
+                            <p style="line-height: 1.2; color:black; font-size:12px">Model: Playground
+                                v2.5<br>Prompt: <b style="color: #604CC3;">"Videogame, Plumber"</b></p>
+                            <img src="images/intro/2.png" />
+                        </a>
+                        <a href="images/intro/3.png" data-featherlight="image" class="col-3 wow fadeI"
+                            data-wow-delay="0.5s">
+                            <p style="line-height: 1.2; color:black; font-size:12px">Model: DALL·E 3<br>Prompt:
+                                <b style="color: #604CC3;">"Videogame, Plumber"</b></b>
+                            </p>
+                            <img src="images/intro/3.png" />
+                        </a>
+                    </div>
+                    <div class="col-2" style="margin-bottom: 0px;">
+                        <a href="images/intro/4.png" data-featherlight="image" class="col-3 wow fadeIn"
+                            data-wow-delay="0.1s">
+                            <p style="line-height: 1.2; color:black; font-size:12px">Model: Playground
+                                v2.5<br>Propmt: "Batman"</p>
+                            <img src="images/intro/4.png" />
+                        </a>
+
+
+                        <a href="images/intro/5.png" data-featherlight="image" class="col-3 wow fadeIn"
+                            data-wow-delay="0.3s">
+                            <p style="line-height: 1.2; color:black; font-size:12px">Model: Playground
+                                v2.5<br>Prompt: <b style="color: #604CC3;">"Gotham, Superhero"</b></p>
+                            <img src="images/intro/5.png" />
+                        </a>
+                        <a href="images/intro/6.png" data-featherlight="image" class="col-3 wow fadeI"
+                            data-wow-delay="0.5s">
+                            <p style="line-height: 1.2; color:black; font-size:12px">Model: DALL·E 3<br>Prompt:
+                                <b style="color: #604CC3;">"Gotham, Superhero"</b></b>
+                            </p>
+                            <img src="images/intro/6.png" />
+                        </a>
+                    </div> -->
+
+                </aside>
+                <!-- <div class="row clearfix no-padding-top no-padding-bottom">
+                    <div class="col-1">
+                        <p> Despite implemented guardrails, models can still be triggered by names, keywords, or
+                            descriptions to generate copyrighted characters. This mismatch between generic prompt
+                            and specific output with potential copyright risks raises serious legal concern.
+                            Our project makes the following contributions:
+                        <ul>
+                            <li>First, we build <a href="#about">CopyCat</a>, an evaluation suite with a diverse set
+                                of
+                                popular copyrighted characters and a novel evaluation pipeline. We apply the
+                                evaluation
+                                suite on 5 image-generation models (<a
+                                    href="https://huggingface.co/playgroundai/playground-v2.5-1024px-aesthetic">Playground
+                                    v2.5</a>, <a
+                                    href="https://huggingface.co/docs/diffusers/en/using-diffusers/sdxl">Stable
+                                    Diffusion XL</a>, <a href="https://pixart-alpha.github.io/">PixArt-α</a>, <a
+                                    href="https://github.com/deep-floyd/IF">DeepFloyd IF</a>, <a
+                                    href="https://openai.com/index/dall-e-3/">DALL·E 3</a>), and one video
+                                generation
+                                model (<a href="https://arxiv.org/abs/2303.08320">VideoFusion</a>).</li>
+                            <li>Second, we demonstrate ways to <a href="#method">semi-automatically identify
+                                    keywords or phrases
+                                    associated with a character</a> are enough to generate their image, without
+                                mentioning their
+                                name.</li>
+                            <li>Third, we find that existing <a href="#mitigations">mitigations are not fully
+                                    effective and suggest new strategies</a>.
+                            </li>
+                            <li>Last but not the least, we summarize some <a href="#takeaways">key takeaways for
+                                    users and model deployers</a>.
+                            </li>
+                        </ul>
+                        </p>
+                    </div>
+                </div> -->
+
+            </section>
+
+
+
+            <!--Introduction-->
+            <section id="about" class="introduction scrollto">
+                <div class="row clearfix">
+                    <div class="col-3">
+                        <div class="section-heading">
+                            <h2 class="section-title">Demo</h2>
+                            <p class="section-subtitle">Sample EgoLCD generations highlighting long-horizon consistency.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-1" style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <div style="flex: 1 1 30%; min-width: 260px; display: flex; flex-direction: column; gap: 8px;">
+                            <video src="videos/1.mp4" controls style="width: 100%; border-radius: 6px;"></video>
+                            <p style="margin: 0; padding: 12px; background: rgba(96,76,195,0.08); border-radius: 6px;">
+                                The camera initially stays in the kitchen area multiple times, with blue tile walls, white cabinets, and double groove
+                                stainless steel sinks repeatedly appearing in the picture ...... The overall video constantly switches back and forth
+                                between kitchen operations, hallway activities, living room workspaces, and TV playback content ......
+                            </p>
+                        </div>
+                        <div style="flex: 1 1 30%; min-width: 260px; display: flex; flex-direction: column; gap: 8px;">
+                            <video src="videos/2.mp4" controls style="width: 100%; border-radius: 6px;"></video>
+                            <p style="margin: 0; padding: 12px; background: rgba(96,76,195,0.08); border-radius: 6px;">
+                                In the video, there are one or two people wearing blue sweaters and dark pants ...... Their actions include clapping
+                                hands, petting pets, and playing with pets using various toys ......
+                            </p>
+                        </div>
+                        <div style="flex: 1 1 30%; min-width: 260px; display: flex; flex-direction: column; gap: 8px;">
+                            <video src="videos/3.mp4" controls style="width: 100%; border-radius: 6px;"></video>
+                            <p style="margin: 0; padding: 12px; background: rgba(96,76,195,0.08); border-radius: 6px;">
+                                The wooden workbench is piled with saws, tape measures, blue markers, drills, and wooden boards ...... People often
+                                move the boards back and forth in the workshop while inspecting the work area and moving the wood ......
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--End of Introduction-->
+
+
+
+                <!--Content Section-->
+            <section id="method" class="scrollto">
+                <div class="row clearfix">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h2 class="section-title">Long-Short Memory &amp; Structured Narrative Prompting</h2>
+                        </div>
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <img src="images/figure2-1.png" alt="EgoLCD memory design and structured narrative prompting" style="width: 100%; max-width: 1100px; border-radius: 8px;" />
+                        </div>
+                        <p style="text-align: center; margin: 0 auto; max-width: 950px;">
+                            EgoLCD pairs attention-based short-term memory with a sparse long-term KV cache to retain key tokens while minimizing drift, then uses structured narrative prompts to guide multi-segment video synthesis with consistent scene layouts and semantics across prompts.
+                        </p>
+                    </div>
+                </div>
+            </section>
+    <!--End of Content Section-->
+
+
+                <!--Content Section-->
+            <section id="method" class="scrollto">
+                <div class="row clearfix">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h2 class="section-title">The overall framework of EgoLCD</h2>
+                        </div>
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <img src="images/egolcd-1.png" alt="EgoLCD overall framework" style="width: 100%; max-width: 1100px; border-radius: 8px;" />
+                        </div>
+                        <p style="text-align: center; margin: 0 auto; max-width: 950px;">
+                            EgoLCD integrates short-term attention with LoRA, a sparse long-term KV cache, and structured narrative prompts to maintain global context and local fidelity across long egocentric video generation.
+                        </p>
+                    </div>
+                </div>
+            </section>
+    <!--End of Content Section-->
+
+
+    </main>
+    <!--End Main Content Area-->
+
+
+    <!--Footer-->
+    <footer id="footer" class="clearfix scrollto">
+        <div class="row clearfix">
+
+
+            <div class="col-55">
+                <h4 style="text-transform: none; font-weight:600">BibTex</h3>
+                    <p style="font-size: 14px;">If you find our code and paper helpful, please consider citing our
+                        work</p>
+                    <div style="font-size: 12.5px;">
+                        <pre style="white-space: pre-line;">
+                            @article{luo2025univid,
+                                title={Univid: The open-source unified video model},
+                                author={Luo, Jiabin and Lin, Junhui and Zhang, Zeyu and Wu, Biao and Fang, Meng and Chen, Ling and Tang, Hao},
+                                journal={arXiv preprint arXiv:2509.24200},
+                                year={2025}
+                                }
+                        </pre>
+                        </pre>
+                    </div>
+            </div>
+
+            <!-- <div class="col-40">
+                <h4 style="text-transform: none; font-weight:600">Acknowledgement</h3>
+                    <p style="font-size: 14px;">We thank Yanai Elazar for his insights on the WIMBD indices. We
+                        thank Colin Wang, Mengzhou Xia,
+                        Dan Friedman, Howard Yen, Jiayi Geng, Xindi Wu, Boyi Wei, Samyak Gupta, and Eric Wallace for
+                        providing helpful feedback. Luxi He is supported by the Gordon Y. S. Wu Fellowship. Yangsibo
+                        Huang is supported by the Wallace Memorial Fellowship. This research is partially supported
+                        by a
+                        Princeton SEAS Innovation Grant.
+                        Any opinions, findings, conclusions, or recommendations expressed in this material are those
+                        of
+                        the author(s) and do not necessarily reflect the views of the sponsors. </p>
+
+                    </p>
+            </div> -->
+
+            <!--Social Icons in Footer-->
+            <!-- <div class="col-10">
+                <ul class="col-1 social-icons">
+                    <li>
+                        <a target="_blank" title="Code" href="">
+                            <i class="fa fa-github fa-1x"></i><span>Code</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" title="Paper" href="">
+                            <i class="fa fa-paperclip fa-1x"></i><span>Paper</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" title="Twitter" href="">
+                            <i class="fa fa-twitter fa-1x"></i><span>Twitter</span>
+                        </a>
+                    </li>
+                </ul>
+            </div> -->
+            <!--End of Social Icons in Footer-->
+        </div>
+    </footer>
+    <!--End of Footer-->
+
+    </div>
+
+    <!-- Include JavaScript resources -->
+    <script src="js/jquery.1.8.3.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/featherlight.min.js"></script>
+    <script src="js/featherlight.gallery.min.js"></script>
+    <script src="js/jquery.enllax.min.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.stickyNavbar.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/images-loaded.min.js"></script>
+    <script src="js/lightbox.min.js"></script>
+    <script src="js/site.js"></script>
+
+
+</body>
+
+</html>
