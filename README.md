@@ -1,2 +1,1 @@
-# EgoLCD
-EgoLCD: Egocentric Video Generation with Long Context Diffusion
+# EgoLCD: Egocentric Video Generation with Long Context Diffusion
